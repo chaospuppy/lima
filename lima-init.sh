@@ -24,7 +24,9 @@ osx_install(){
   declare -a deps=(lima docker docker-compose)
 
   for dep in "${deps[@]}"; do
+    echo "$dep"
     if ! command -v $dep 2>&1 >/dev/null ; then
+      echo "installing $dep"
       brew install $dep
     fi
   done
@@ -38,9 +40,9 @@ fi
 
 limactl start $limafile
 
-if [[ $limafile == "docker.yaml" ]];
+if [[ $limafile == "docker.yaml" ]]; then
   if ! docker context ls --format '{{ .Name }}' | grep -q docker; then
-    docker context create lima-docker --docker "host=unix:///Users/timseagren/.lima/docker/sock/docker.sock"
+    docker context create lima-docker --docker "host=unix:///Users/tim.seagren/.lima/docker/sock/docker.sock"
   fi
   docker context use lima-docker
 fi
