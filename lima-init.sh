@@ -40,8 +40,17 @@ fi
 limactl start $limafile
 
 if [[ $limafile == "docker.yaml" ]]; then
-  if ! docker context ls --format '{{ .Name }}' | grep -q docker; then
-    docker context create lima-docker --docker "host=unix:///${HOME}/.lima/docker/sock/docker.sock"
+  context="docker"
+  if ! docker context ls --format '{{ .Name }}' | grep -q $context; then
+    docker context create lima-docker --docker "host=unix:///${HOME}/.lima/$context/sock/docker.sock"
   fi
-  docker context use lima-docker
+  docker context use $context
+fi
+
+if [[ $limafile == "k3d-lima.yaml" ]]; then
+  context="k3d-lima"
+  if ! docker context ls --format '{{ .Name }}' | grep -q $context; then
+    docker context create $context --docker "host=unix:///${HOME}/.lima/$context/sock/docker.sock"
+  fi
+  docker context use $context
 fi

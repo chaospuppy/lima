@@ -68,7 +68,7 @@ portForwards:
 message: |
   To run `docker` on the host (assumes docker-cli is installed), run the following commands:
   ------
-  docker context create lima --docker "host=unix://{{.Dir}}/sock/docker.sock"
-  docker context use lima
+  docker context create k3d-lima --docker "host=unix://{{.Dir}}/sock/docker.sock"
+  docker context use k3d-lima
   docker run hello-world
   ------
