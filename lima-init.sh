@@ -66,10 +66,19 @@ if [[ $limafile == "docker.yaml" ]]; then
   docker context use $context
 fi
 
-if [[ $limafile == "k3d-lima.yaml" ]]; then
+if [[ $limafile == "k3d.yaml" ]]; then
   context="k3d-lima"
   if ! docker context ls --format '{{ .Name }}' | grep -q $context; then
     docker context create $context --docker "host=unix:///${HOME}/.lima/$context/sock/docker.sock"
   fi
   docker context use $context
+fi
+
+if [[ $limafile == "k3s.yaml" ]]; then
+  mkdir -p "${HOME}/.lima/k3s/conf"
+  kubeconfig="${HOME}/.lima/k3s/conf/kubeconfig.yaml"
+  limactl shell k3s sudo cat /etc/rancher/k3s/k3s.yaml >$kubeconfig
+  if command -v kubeconfig-combine 2>&1 >/dev/null ; then
+    kubeconfig-combine --context-name lima-k3s --cluster-name lima-k3s --user-name lima-k3s $kubeconfig
+  fi
 fi
