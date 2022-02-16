@@ -21,6 +21,11 @@ mounts:
 containerd:
   system: false
   user: false
+
+cpus: 1
+memory: 256GiB
+disk: 20GiB
+
 provision:
 - mode: system
   script: |
