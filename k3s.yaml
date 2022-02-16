@@ -28,6 +28,8 @@ containerd:
   system: false
   user: false
 
+memory: 16GiB
+
 provision:
 - mode: system
   script: |

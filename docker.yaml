@@ -23,7 +23,7 @@ containerd:
   user: false
 
 cpus: 1
-memory: 256GiB
+memory: 256Mi
 disk: 20GiB
 
 provision:
