@@ -23,7 +23,7 @@ containerd:
   user: false
 
 cpus: 1
-memory: 1GiB
+memory: 5GiB
 disk: 20GiB
 
 provision:
@@ -62,8 +62,6 @@ probes:
     fi
   hint: See "/var/log/cloud-init-output.log". in the guest
 portForwards:
-- guestPort: 5000
-  hostPort: 5000
 - guestSocket: "/run/user/{{.UID}}/docker.sock"
   hostSocket: "{{.Dir}}/sock/docker.sock"
 message: |
