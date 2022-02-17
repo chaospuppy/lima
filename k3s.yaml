@@ -30,11 +30,38 @@ containerd:
 
 memory: 16GiB
 
+networks:
+  # vnl (virtual network locator) points to the vde_switch socket directory,
+  # optionally with vde:// prefix
+  # - vnl: "vde:///var/run/vde.ctl"
+  #   # VDE Switch port number (not TCP/UDP port number). Set to 65535 for PTP mode.
+  #   # Default: 0
+  #   switchPort: 0
+  #   # MAC address of the instance; lima will pick one based on the instance name,
+  #   # so DHCP assigned ip addresses should remain constant over instance restarts.
+  #   macAddress: ""
+  #   # Interface name, defaults to "lima0", "lima1", etc.
+  #   interface: ""
+
 provision:
 - mode: system
   script: |
     #!/bin/sh
-    curl -sfL https://get.k3s.io | sh -
+    sudo mkdir -p /etc/rancher/k3s/
+    cat <<EOF | sudo tee /etc/rancher/k3s/registries.yaml
+    mirrors:
+      k3s-registry.local:
+        endpoint:
+          - "http://host.lima.internal:5000"
+      configs:
+        k3s-registry.local:
+          tls:
+            insecure_skip_verify: true
+    EOF
+- mode: system
+  script: |
+    #!/bin/sh
+    curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik" sh -
 
 probes:
 - script: |
