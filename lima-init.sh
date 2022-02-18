@@ -80,6 +80,6 @@ if [[ $limafile == "k3s.yaml" ]]; then
   kubeconfig="${HOME}/.lima/k3s/conf/kubeconfig.yaml"
   limactl shell k3s sudo cat /etc/rancher/k3s/k3s.yaml >$kubeconfig
   if command -v kubeconfig-combine 2>&1 >/dev/null ; then
-    kubeconfig-combine --context-name lima-k3s --cluster-name lima-k3s --user-name lima-k3s $kubeconfig
+    kubeconfig-combine --allow-overwrite --all-name lima-k3s $kubeconfig
   fi
 fi
