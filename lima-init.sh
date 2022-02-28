@@ -59,7 +59,7 @@ fi
 limactl start $limafile
 
 if [[ $limafile == "docker.yaml" ]]; then
-  context="lima-docker"
+  context="docker"
   if ! docker context ls --format '{{ .Name }}' | grep -q $context; then
     docker context create $context --docker "host=unix:///${HOME}/.lima/$context/sock/docker.sock"
   fi
