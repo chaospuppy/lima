@@ -50,7 +50,7 @@ provision:
     sudo mkdir -p /etc/rancher/k3s/
     cat <<EOF | sudo tee /etc/rancher/k3s/registries.yaml
     mirrors:
-      k3s-registry.local:
+      k3s-registry.internal:
         endpoint:
           - "http://host.lima.internal:5000"
       configs:
