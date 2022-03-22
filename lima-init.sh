@@ -56,7 +56,7 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   debian_install
 fi
 
-limactl start $limafile
+limactl start --tty=false $limafile
 
 if [[ $limafile == "docker.yaml" ]]; then
   context="docker"
