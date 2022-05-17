@@ -20,8 +20,9 @@ images:
 - location: "https://cloud-images.ubuntu.com/impish/current/impish-server-cloudimg-arm64.img"
   arch: "aarch64"
 
-# Mounts are disabled in this example, but can be enabled optionally.
-mounts: []
+mounts:
+- location: "/tmp/k3s"
+  writable: true
 
 # containerd is managed by k3s, not by Lima, so the values are set to false here.
 containerd:
@@ -61,8 +62,7 @@ provision:
 - mode: system
   script: |
     #!/bin/sh
-    # curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik" sh -
-    curl -sfL https://get.k3s.io | sh -
+    curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik" sh -
 
 probes:
 - script: |
