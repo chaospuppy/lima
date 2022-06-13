@@ -7,7 +7,7 @@
 # $ docker ...
 
 # This example requires Lima v0.8.0 or later
-arch: "x86_64"
+# arch: "x86_64"
 
 images:
 # Hint: run `limactl prune` to invalidate the "current" cache
