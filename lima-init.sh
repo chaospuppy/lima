@@ -60,11 +60,19 @@ limactl start --tty=false $limafile
 
 if [[ $limafile == "docker.yaml" ]]; then
   context="docker"
-  if ! docker context ls --format '{{ .Name }}' | grep -q $context; then
+  if ! docker context ls --format '{{ .Name }}' | grep -q "^$context$"; then
     docker context create $context --docker "host=unix:///${HOME}/.lima/$context/sock/docker.sock"
   fi
   docker context use $context
   docker run -d -p 5000:5000 registry:2
+fi
+
+if [[ $limafile == "docker-privileged.yaml" ]]; then
+  context="docker-privileged"
+  if ! docker context ls --format '{{ .Name }}' | grep -q "^$context$"; then
+    docker context create $context --docker "host=unix:///${HOME}/.lima/$context/sock/docker.sock"
+  fi
+  docker context use $context
 fi
 
 if [[ $limafile == "k3s.yaml" ]]; then
