@@ -63,15 +63,19 @@ provision:
       k3s-registry.internal:
         endpoint:
           - "http://host.lima.internal:5000"
-      configs:
-        k3s-registry.local:
-          tls:
-            insecure_skip_verify: true
+    configs:
+      registry1.dso.mil:
+        auth:
+          username: REGISTRY1_USERNAME
+          password: REGISTRY1_PASSWORD
+      k3s-registry.local:
+        tls:
+          insecure_skip_verify: true
     EOF
 - mode: system
   script: |
     #!/bin/sh
-    curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik" sh -
+    curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik" INSTALL_K3S_VERSION="v1.20.15+k3s1" sh -
 
 probes:
 - script: |
